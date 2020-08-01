@@ -9,18 +9,20 @@ The script uses a hotkey by default, but can be setup to run on startup.
 When the script is activated it will automatically detect the refresh rate of the current video and attempt to change the display
 to the closes rate on the whitelist. The script will keep track of the original refresh rate of the monitor and revert when either the
 correct keybind is pressed, or when mpv exits. The original rate needs to be included on the whitelist and follows
-custom rate rules (i.e. if the monitor was originally 25Hz and the whitelist contains "25-50", then it will revert to 50).
+custom rate rules (i.e. if the monitor was originally 25Hz and the whitelist contains `25-50`, then it will revert to 50).
 
 ## Rate Whitelist
 If the display does not support the specified resolution or refresh rate it will silently fail
 If the video refresh rate does not match any on the whitelist it will pick the next highest.
 If the video fps is higher than any on the whitelist it will pick the highest available
-The whitelist is specified via the script-opt 'rates'. Valid rates are separated via semicolons, do not include spaces and list in ascending order.
-    Example:    changerefresh-rates="23;24;30;60"
+The whitelist is specified via the script-opt `rates`. Valid rates are separated via semicolons, do not include spaces and list in ascending order.
+    
+    changerefresh-rates="23;24;30;60"
 
 ### Custom Rates
 You can also set a custom display rate for individual video rates using a hyphen:
-    Example:    changerefresh-rates="23;24;25-50;30;60"
+    
+    changerefresh-rates="23;24;25-50;30;60"
 This will change the display to 23, 24, and 30 fps when playing videos in those same rates, but will change the display to 50 fps when
 playing videos in 25 Hz
 
@@ -42,13 +44,14 @@ can handle playing UHD files directly, but not upscaling to UHD.
 The keybind to switch refresh rates is f10 by default, but this can be changed by setting different script bindings in input.conf.
 The keybinds, and their behaviour are as follows:
 
-    f10         match-refresh       detects the video fps and attempts to change the monitor refresh
-    Ctrl+f10    revert-refresh      revert the display to the original refresh rate
-                toggle-fps-type     switch between using the estimated and specified fps for the video
-                set-default-refresh set the current resolution/refresh as the default
+    f10         match-refresh           detects the video fps and attempts to change the monitor refresh
+    Ctrl+f10    revert-refresh          revert the display to the original refresh rate
+                toggle-fps-type         switch between using the estimated and specified fps for the video
+                set-default-refresh     set the current resolution/refresh as the default
 
 ## Script Messages
 You can also send refresh change commands directly using script messages:
+    
     script-message change-refresh [width] [height] [rate] [display]
 
 Display stands for the display number (starting from 0) which is printed to the console when the display is changed.
