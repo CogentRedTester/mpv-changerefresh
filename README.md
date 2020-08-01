@@ -41,6 +41,7 @@ can handle playing UHD files directly, but not upscaling to UHD.
 ## Keybinds
 The keybind to switch refresh rates is f10 by default, but this can be changed by setting different script bindings in input.conf.
 The keybinds, and their behaviour are as follows:
+
     f10         match-refresh       detects the video fps and attempts to change the monitor refresh
     Ctrl+f10    revert-refresh      revert the display to the original refresh rate
                 toggle-fps-type     switch between using the estimated and specified fps for the video
@@ -58,4 +59,4 @@ They are also completely independant from the usual automatic reversion system, 
 
 
 ## Configuration
-See changerefresh.conf for the full options list, this file can be placed into the script-opts folder inside the mpv config directory.
+See `changerefresh.conf` for the full options list, this file can be placed into the script-opts folder inside the mpv config directory.
