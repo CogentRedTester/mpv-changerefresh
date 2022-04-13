@@ -110,3 +110,22 @@ local function execute(args)
     end
     return cmd
 end
+
+local function get_display_info()
+    local fullscreen = mp.get_property_bool("fullscreen", false)
+
+    --wait for the mpv internals to switch to fullscreen
+    if not fullscreen then
+        mp.set_property_bool("fullscreen", true)
+        sleep(0.1)
+    end
+
+    local display_info = {}
+    display_info.width, display_info.height = mp.get_osd_size()
+    display_info.name = mp.get_property("display-names")
+    display_info.id = tonumber(display_info.name:match("(%d+)$")) - 1
+    display_info.fps = mp.get_property_number("display-fps")
+
+    if not fullscreen then mp.set_property_bool("fullscreen", false) end
+    return display_info
+end
