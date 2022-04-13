@@ -64,3 +64,49 @@ local o = {
 
 opts.read_options(o, "change-refresh", function() end)
 
+
+local function co_run(fn, ...)
+    return coroutine.wrap(fn)(...)
+end
+
+local function sleep(n)
+    local co = coroutine.running()
+    mp.add_timeout(n, function()
+        coroutine.resume(co)
+    end)
+    coroutine.yield()
+end
+
+local function execute_asyc(args)
+    local co = coroutine.running()
+    mp.command_native_async({
+        name = "subprocess",
+        playback_only = false,
+        capture_stdout = true,
+        capture_stderr = true,
+        args = args
+    }, function(_, result)
+        coroutine.resume(co, result)
+    end)
+
+    local cmd = coroutine.yield()
+    if cmd.status ~= 0 then
+        msg.error(cmd.stderr)
+    end
+    return cmd
+end
+
+local function execute(args)
+    local cmd = mp.command_native({
+        name = "subprocess",
+        playback_only = false,
+        capture_stdout = true,
+        capture_stderr = true,
+        args = args
+    })
+
+    if cmd.status ~= 0 then
+        msg.error(cmd.stderr)
+    end
+    return cmd
+end
