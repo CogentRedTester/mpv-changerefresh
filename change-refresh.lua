@@ -129,3 +129,28 @@ local function get_display_info()
     if not fullscreen then mp.set_property_bool("fullscreen", false) end
     return display_info
 end
+
+function change_refresh(width, height, fps, display_id, display_info)
+    if not width or not height or not fps then return msg.error("change-refresh did not recieve width height and rate values") end
+
+    if not display_info then display_info = get_display_info() end
+    if not display_id then display_id = display_info.id end
+
+    if display_id == display_info.id then
+        msg.info(string.format("changing %s (#%d) to %dx%d %dHz", display_info.name, display_id, width, height, fps))
+    else
+        msg.info(string.format("changing display %d to %dx%d %dHz", display_id, width, height, fps))
+    end
+
+    execute({o.nircmd, "setdisplay", "monitor:"..display_id, width, height, o.bdepth, fps})
+
+    local new_info = get_display_info()
+end
+
+mp.add_key_binding("KP1", nil, function()
+    co_run(function()
+        print(utils.to_string(get_display_info()))
+    end)
+end)
+
+mp.register_script_message("change-refresh", function(...) co_run(change_refresh, ...) end)
