@@ -3,13 +3,14 @@
     This was written because I could not get autospeedwin to work :(
 ]]--
 
-msg = require 'mp.msg'
-utils = require 'mp.utils'
-require 'mp.options'
+local mp = require "mp"
+local msg = require "mp.msg"
+local utils = require "mp.utils"
+local opts = require "mp.options"
 
 --options available through --script-opts=changerefresh-[option]=value
 --all of these options can be changed at runtime using profiles, the script will automatically update
-local options = {
+local o = {
     --the location of nircmd.exe, tries to use the system path by default
     nircmd = "nircmd",
 
@@ -35,19 +36,19 @@ local options = {
     --see https://mpv.io/manual/master/#command-interface-container-fps for details
     estimated_fps = false,
 
-    --automatically detect monitor resolution when changing refresh rates
-    --will use this resolution when reverting changes
-    detect_display_resolution = true,
+    -- --automatically detect monitor resolution when changing refresh rates
+    -- --will use this resolution when reverting changes
+    -- detect_display_resolution = true,
 
-    --default width and height to use when changing & reverting the refresh rate
-    --ony used if detect_display_resolution is false
-    original_width = 1920,
-    original_height = 1080,
+    -- --default width and height to use when changing & reverting the refresh rate
+    -- --ony used if detect_display_resolution is false
+    -- original_width = 1920,
+    -- original_height = 1080,
 
-    --if this value is set to anything but zero to script will always to to revert to this rate
-    --this rate bypasses the usual rates whitelist, so make sure it is valid
-    --the actual original rate will be ignored
-    original_rate = 0,
+    -- --if this value is set to anything but zero to script will always to to revert to this rate
+    -- --this rate bypasses the usual rates whitelist, so make sure it is valid
+    -- --the actual original rate will be ignored
+    -- original_rate = 0,
 
     --if enabled, this mode sets the monitor to the specified dimensions when the resolution of the video is greater than or equal to the threshold
     --if less than the threshold the monitor will be set to the default shown above, or to the current resolution
@@ -60,3 +61,6 @@ local options = {
     --set whether to output status messages to the osd
     osd_output = true
 }
+
+opts.read_options(o, "change-refresh", function() end)
+
