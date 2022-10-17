@@ -134,8 +134,8 @@ function updateOptions(changes)
     end
 
     --allow the auto option to be changed at runtime using profiles
-    if changes and changes.auto then
-        mp.add_timeout(1, autoChange)
+    if changes and changes.auto and options.auto then
+        mp.add_timeout(1.5, matchVideo)
     end
 end
 read_options(options, 'changerefresh', updateOptions)
