@@ -132,13 +132,18 @@ function updateOptions(changes)
         checkRatesString()
         updateTable()
     end
+
+    --allow the auto option to be changed at runtime using profiles
+    if changes and changes.auto then
+        mp.add_timeout(1, autoChange)
+    end
 end
 read_options(options, 'changerefresh', updateOptions)
 
 --checks if the rates string contains any invalid characters
 function checkRatesString()
     local str = options.rates
-    
+
     str = str:gsub(";", '')
     str = str:gsub("%-", '')
 
