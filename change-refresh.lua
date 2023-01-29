@@ -266,6 +266,7 @@ function changeRefresh(width, height, rate, display)
 
     if (process.status < 0) then
         local error = process.error_string
+        msg.warn(utils.to_string(process))
         msg.error('Error sending command')
         if error == "init" then
             msg.error('could not start nircmd - make sure you are using the right path')
