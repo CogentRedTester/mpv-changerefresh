@@ -487,7 +487,7 @@ function autoChange()
     if options.auto then
         --waits until some of the required properties have been loaded before running
         msg.verbose('automatically changing refresh')
-        mp.add_timeout(0.5, matchVideo)
+        mp.add_timeout(1, matchVideo)
     end
 end
 
